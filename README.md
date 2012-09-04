@@ -6,6 +6,8 @@ __statistik__ is a Node.js client for Etsy's StatsD
 Usage
 -----
 
+In node.js:
+
 ```bash
 npm install statistik
 ```
@@ -21,6 +23,28 @@ log.increment(['users', 'wins']);   // handles multiple stats at once
 log.decrement('users', 0.2);        // supports sampling as well
 
 log.gauge('cpu-usage', 30, 0.2);    // gauges with sampling work too
+```
+
+In CLI:
+
+```bash
+$ npm isntall -g statistik
+$ statistik --help
+
+    Usage: statistik [options] arguments
+
+    Options:
+
+      -h, --help         output usage information
+      -V, --version      output the version number
+      -h, --host <host>  StatsD hostname
+
+    Examples:
+
+      $ statistik increment visits
+      $ statistik timing load 30 0.5
+      $ statistik -h graphite.local gauge mem-usage 12
+
 ```
 
 Running the tests
