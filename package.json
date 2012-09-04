@@ -1,0 +1,7 @@
+{
+  "name": "statistik",
+  "description": "Node client for Etsy's StatsD"
+  "version": "0.0.1",
+  "author": "Julian Gruber <julian@juliangruber.com>",
+  "repository": "git://github.com/juliangruber/statistik"
+}

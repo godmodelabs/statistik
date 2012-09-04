@@ -1,17 +1,17 @@
-node-statsd-client
-==================
+statistik
+=========
 
-Node.js client for Etsy's StatsD
+__statistik__ is a Node.js client for Etsy's StatsD
 
 Usage
 -----
 
 ```bash
-npm install node-statsd-client
+npm install statistik
 ```
 
 ```javascript
-var log = require('node-statsd-client')('localhost');
+var log = require('statistik')('localhost');
 
 log.timing('pageload', 123);        // in miliseconds
 log.timing('pageload', 123, 0.5);   // supports sampling
