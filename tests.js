@@ -26,7 +26,7 @@ var tests = [{
     name: 'decrement', fn: 'decrement', args: ['users'],
     res: 'users:-1|c'
   }, {
-    name: 'decrementMulti', fn: 'decrement', args: ['users', 0.999],
+    name: 'decrementSampled', fn: 'decrement', args: ['users', 0.999],
     res: 'users:-1|c@0.999'
   }, {
     name: 'gauge', fn: 'gauge', args: ['usage', 30, 0.999],
@@ -78,7 +78,10 @@ for (t in tests) {
 }
 
 q.add(function finishUp(done) {
-  server.close(); log.close(); done();
+  server.close();
+  log.increment('should not fail');
+  log.close();
+  done();
 });
 
 // Start Tests
