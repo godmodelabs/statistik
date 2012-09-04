@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var statistik = require('../index');
+
+program
+  .version('0.0.2')
+  .usage('[options] arguments')
+  .option('-h, --host <host>', 'StatsD hostname')
+
+program.on('--help', function() {
+  console.log('  Examples:');
+  console.log('');
+  console.log('    $ statistik increment visits');
+  console.log('    $ statistik timing load 30 0.5');
+  console.log('    $ statistik -h graphite.local gauge mem-usage 12');
+  console.log('');
+});
+
+program.parse(process.argv);
+
+if (program.args.length < 2) return console.log('see --help');
+
+var log = statistik(program.host || 'localhost');
+var method, stat, value, sample;
+
+method = program.args[0];
+stat = program.args[1];
+
+log[method].apply(log, program.args.slice(1));
+log.close();

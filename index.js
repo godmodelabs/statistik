@@ -30,7 +30,7 @@ StatsD.prototype.send = function(stats, value, method, sampleRate) {
     message = stats[s]+':'+value+'|'+method;
     if (sampleRate) message += '@'+sampleRate;
 
-    if (!this.socket) this.socket = dgram.createSocket('udp4');
+    if (!this.socket) this.socket = createSocket();
     this.socket.send(new Buffer(message), 0, message.length, 8125, this.host);
     this.clearSocket();
   }
@@ -52,6 +52,12 @@ StatsD.prototype.clearSocket = function() {
     if (Date.now()-this.lastTransmissionAt < 1000) return this.clearSocket();
     this.close();
   }), 1000);
+}
+
+function createSocket() {
+  var socket = dgram.createSocket('udp4');
+  socket.on('error', function() {/*noop*/});
+  return socket;
 }
 
 function bind(obj, fn) {
