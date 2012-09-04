@@ -50,7 +50,9 @@ Queue.prototype.run = function() {
   function cb() {
     this.toexec = this.toexec.slice(1);
     if (this.toexec.length > 0) return this.toexec[0](bind(this, cb));
-    console.log('all tests passed after '+(Date.now()-this.start)+'ms');
+    console.log('')
+    console.log('  all tests passed after '+(Date.now()-this.start)+'ms');
+    console.log('')
   }
 }
 

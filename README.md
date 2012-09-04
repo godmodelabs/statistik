@@ -55,7 +55,10 @@ Running the tests
 -----------------
 
 ```bash
-node tests.js
+$ node tests.js
+
+    all tests passed after 9ms
+    
 ```
 
 License
