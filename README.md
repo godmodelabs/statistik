@@ -9,7 +9,7 @@ Usage
 In node.js:
 
 ```bash
-npm install statistik
+$ npm install statistik
 ```
 
 ```javascript
