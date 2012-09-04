@@ -21,17 +21,16 @@ StatsD.prototype.gauge = function(stat, value, sampleRate) {
 }
 
 StatsD.prototype.send = function(stats, value, method, sampleRate) {
-  if ('string' == typeof stats) stats = [stats];
   if (sampleRate && Math.random() > sampleRate) return;
-  var stat, message;
+  if ('string' == typeof stats) stats = [stats];
   this.lastTransmissionAt = Date.now();
+  
+  var message;
   for (var s in stats) {
-    stat = stats[s];
-    
-    message = stat+':'+value+'|'+method;
+    message = stats[s]+':'+value+'|'+method;
     if (sampleRate) message += '@'+sampleRate;
-    if (!this.socket) this.socket = dgram.createSocket('udp4');
 
+    if (!this.socket) this.socket = dgram.createSocket('udp4');
     this.socket.send(new Buffer(message), 0, message.length, 8125, this.host);
     this.clearSocket();
   }
@@ -64,16 +63,3 @@ function bind(obj, fn) {
 module.exports = function(host) {
   return new StatsD(host);
 };
-
-// var log = new StatsD();
-// 
-// log.timing('pageload', 123);
-// log.timing('pageload', 123, 0.5);
-// 
-// log.increment('visits');
-// log.increment(['users', 'wins']);
-// log.decrement('users', 0.5);
-// 
-// log.gauge('cpu-usage', 30, 0.5);
-// 
-// log.close();
