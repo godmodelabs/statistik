@@ -30,7 +30,7 @@ In CLI:
 ```bash
 $ npm isntall -g statistik
 $ statistik --help
-
+  
     Usage: statistik [options] arguments
 
     Options:
@@ -38,6 +38,10 @@ $ statistik --help
       -h, --help         output usage information
       -V, --version      output the version number
       -h, --host <host>  StatsD hostname
+
+    Configuration:
+
+      $ echo "graphite.local" > ~/.statistik
 
     Examples:
 

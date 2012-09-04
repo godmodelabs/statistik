@@ -2,6 +2,8 @@
 
 var program = require('commander');
 var statistik = require('../index');
+var fs = require('fs');
+var confPath = process.env['HOME']+'/.statistik';
 
 program
   .version('0.0.2')
@@ -9,6 +11,15 @@ program
   .option('-h, --host <host>', 'StatsD hostname')
 
 program.on('--help', function() {
+  console.log('  Configuration:');
+  console.log('');
+  console.log('    $ echo "graphite.local" > ~/.statistik');
+  if (fs.existsSync(confPath)) {
+    console.log(
+      '    currently saved host: '+read(confPath).replace('\n', '')
+    );
+  }
+  console.log('');
   console.log('  Examples:');
   console.log('');
   console.log('    $ statistik increment visits');
@@ -19,13 +30,18 @@ program.on('--help', function() {
 
 program.parse(process.argv);
 
+var host = 'localhost';
+if (fs.existsSync(confPath)) host = read(confPath);
+if (program.host) host = program.host;
+
 if (program.args.length < 2) return console.log('see --help');
 
-var log = statistik(program.host || 'localhost');
-var method, stat, value, sample;
-
-method = program.args[0];
-stat = program.args[1];
+var log = statistik(host);
+var method = program.args[0];
 
 log[method].apply(log, program.args.slice(1));
 log.close();
+
+function read(path) {
+  return fs.readFileSync(path).toString();
+}
