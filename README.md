@@ -1,7 +1,7 @@
 statistik
 =========
 
-__statistik__ is a Node.js client for Etsy's StatsD
+__statistik__ is a Node.js client for Etsy's StatsD with cli support
 
 Usage
 -----
