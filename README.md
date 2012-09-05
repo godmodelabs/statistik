@@ -60,6 +60,9 @@ API
 If you specify a sampleRate (between 0 and 1) StatsD doesn't get hit on every
 log event in order to reduce load but samples up the events that get through so the stats stay correct.
 
+### statistik([hostname='localhost'])
+Returns an instance of __statistik__ bound to `hostname`, from now on referred to as `log`.
+
 ### log.timing(stat, time[, sampleRate=1])
 Log `time` in milliseconds to `stat`.
 
