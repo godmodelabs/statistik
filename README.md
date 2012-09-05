@@ -1,7 +1,10 @@
 statistik
 =========
 
-__statistik__ is a Node.js client for Etsy's StatsD with cli support
+__statistik__ is a Node.js client for Etsy's StatsD with cli support.
+
+It implements StatsD's protocol 1:1 and doesn't provide additional features.
+The UDP connection is closed if not used for a second in order to minimize StatsD's open connections.
 
 Usage
 -----
@@ -50,6 +53,27 @@ $ statistik --help
       $ statistik -h graphite.local gauge mem-usage 12
 
 ```
+
+API
+---
+
+If you specify a sampleRate (between 0 and 1) StatsD doesn't get hit on every
+log event in order to reduce load but samples up the events that get through so the stats stay correct.
+
+### log.timing(stat, time[, sampleRate=1])
+Log `time` in milliseconds to `stat`.
+
+### log.increment(stat[, sampleRate=1])
+Increment the counter at `stat` by 1.
+
+### log.decrement(stat[, sampleRate=1])
+Decrement the counter at `stat` by 1.
+
+### log.gauge(stat, value[, sampleRate=1])
+Set the gauge at `stat` to `value`.
+
+### log.stop()
+Close the UDP socket. This might be necessary if your script doesn't immediately terminate when all work is done just because the UDP socket is still open.
 
 Running the tests
 -----------------
