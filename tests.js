@@ -58,7 +58,7 @@ Queue.prototype.run = function() {
 
 var q = new Queue();
 
-// put tests from `testinations` into the queue
+// enqueue all tests
 var test, res;
 for (t in tests) {
   test = tests[t];
