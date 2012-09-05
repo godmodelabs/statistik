@@ -1,25 +1,70 @@
 var dgram = require('dgram');
 
+/**
+ * Returns an instance of statistik bound to `host`.
+ * 
+ * @constructor
+ * @param {string} [host='localhost'] StatsD's hostname 
+ */
 var StatsD = function(host) {
   this.host = host || 'localhost';
 }
 
+/**
+ * Log `time` in milliseconds to `stat`.
+ * 
+ * @param {string|string[]} stat
+ * @param {integer}         time
+ * @param {float}           [sampleRate]
+ */
 StatsD.prototype.timing = function(stat, time, sampleRate) {
   this.send(stat, time, 'ms', sampleRate);
 }
 
+/**
+ * Increment the counter at `stat` by 1.
+ * 
+ * @param {string|string[]} stat
+ * @param {float}           [sampleRate]
+ */
 StatsD.prototype.increment = function(stat, sampleRate) {
   this.send(stat, 1, 'c', sampleRate);
 }
 
+/**
+ * Decrement the counter at `stat` by 1.
+ * 
+ * @param {string|string[]} stat
+ * @param {float}           [sampleRate]
+ */
 StatsD.prototype.decrement = function(stat, sampleRate) {
   this.send(stat, -1, 'c', sampleRate);
 }
 
+/**
+ * Set the gauge at `stat` to `value`.
+ * 
+ * @param {string|string[]} stat
+ * @param {integer}         value
+ * @param {float}           [sampleRate]
+ */
 StatsD.prototype.gauge = function(stat, value, sampleRate) {
   this.send(stat, value, 'g', sampleRate);
 }
 
+/**
+ * Transmit data to StatsD following StatsD's UDP protocol:
+ * 
+ * `<stat>:<value>|<method>@<sampleRate>`
+ * 
+ * You might need to use this if you have a non standard StatsD implementation
+ * running and want to log custom data.
+ * 
+ * @param {string|string[]} stats
+ * @param {integer}         value
+ * @param {string}          method
+ * @param {float}           [sampleRate]
+ */
 StatsD.prototype.send = function(stats, value, method, sampleRate) {
   if (sampleRate && Math.random() > sampleRate) return;
   if ('string' == typeof stats) stats = [stats];
@@ -36,6 +81,15 @@ StatsD.prototype.send = function(stats, value, method, sampleRate) {
   }
 }
 
+/**
+ * Close the UDP socket.
+ * 
+ * This might be necessary if your script doesn't immediately terminate when
+ * all work is done just because the UDP socket is still open.
+ * 
+ * Also used internally by `clearSocket()` to close the socket after it has
+ * been idle for 1s.
+ */
 StatsD.prototype.close = function() {
   setTimeout(bind(this, function() {
     if (!this.socket) return;
@@ -45,6 +99,12 @@ StatsD.prototype.close = function() {
   }), 10);
 }
 
+/**
+ * Calls `close()` if the socket has been idle for 1s.
+ * Shouldn't need to be called manually.
+ * 
+ * @private
+ */
 StatsD.prototype.clearSocket = function() {
   clearTimeout(this.timeout);
   this.timeout = setTimeout(bind(this, function() {
@@ -54,12 +114,25 @@ StatsD.prototype.clearSocket = function() {
   }), 1000);
 }
 
+/**
+ * Returns a new socket and silences it's errors.
+ * 
+ * @private
+ * @returns {object} socket
+ */
 function createSocket() {
   var socket = dgram.createSocket('udp4');
   socket.on('error', function() {/*noop*/});
   return socket;
 }
 
+/**
+ * Bind utility.
+ * 
+ * @param   {object}    obj Object to bind to
+ * @param   {function}  fn  Function to bind
+ * @returns {function}      Bound function
+ */
 function bind(obj, fn) {
   return function() {
     return fn.call(obj);
