@@ -6,7 +6,7 @@ var dgram = require('dgram');
  * @constructor
  * @param {string} [host='localhost'] StatsD's hostname 
  */
-var StatsD = function(host) {
+var Statistik = function(host) {
   this.host = host || 'localhost';
 }
 
@@ -17,7 +17,7 @@ var StatsD = function(host) {
  * @param {integer}         time
  * @param {float}           [sampleRate]
  */
-StatsD.prototype.timing = function(stat, time, sampleRate) {
+Statistik.prototype.timing = function(stat, time, sampleRate) {
   this.send(stat, time, 'ms', sampleRate);
 }
 
@@ -27,7 +27,7 @@ StatsD.prototype.timing = function(stat, time, sampleRate) {
  * @param {string|string[]} stat
  * @param {float}           [sampleRate]
  */
-StatsD.prototype.increment = function(stat, sampleRate) {
+Statistik.prototype.increment = function(stat, sampleRate) {
   this.send(stat, 1, 'c', sampleRate);
 }
 
@@ -37,7 +37,7 @@ StatsD.prototype.increment = function(stat, sampleRate) {
  * @param {string|string[]} stat
  * @param {float}           [sampleRate]
  */
-StatsD.prototype.decrement = function(stat, sampleRate) {
+Statistik.prototype.decrement = function(stat, sampleRate) {
   this.send(stat, -1, 'c', sampleRate);
 }
 
@@ -48,7 +48,7 @@ StatsD.prototype.decrement = function(stat, sampleRate) {
  * @param {integer}         value
  * @param {float}           [sampleRate]
  */
-StatsD.prototype.gauge = function(stat, value, sampleRate) {
+Statistik.prototype.gauge = function(stat, value, sampleRate) {
   this.send(stat, value, 'g', sampleRate);
 }
 
@@ -65,7 +65,7 @@ StatsD.prototype.gauge = function(stat, value, sampleRate) {
  * @param {string}          method
  * @param {float}           [sampleRate]
  */
-StatsD.prototype.send = function(stats, value, method, sampleRate) {
+Statistik.prototype.send = function(stats, value, method, sampleRate) {
   if (sampleRate && Math.random() > sampleRate) return;
   if ('string' == typeof stats) stats = [stats];
   this.lastTransmissionAt = Date.now();
@@ -90,7 +90,7 @@ StatsD.prototype.send = function(stats, value, method, sampleRate) {
  * Also used internally by `clearSocket()` to close the socket after it has
  * been idle for 1s.
  */
-StatsD.prototype.close = function() {
+Statistik.prototype.close = function() {
   setTimeout(bind(this, function() {
     if (!this.socket) return;
     this.socket.close();
@@ -105,7 +105,7 @@ StatsD.prototype.close = function() {
  * 
  * @private
  */
-StatsD.prototype.clearSocket = function() {
+Statistik.prototype.clearSocket = function() {
   clearTimeout(this.timeout);
   this.timeout = setTimeout(bind(this, function() {
     if (!this.socket) return;
@@ -140,5 +140,5 @@ function bind(obj, fn) {
 }
 
 module.exports = function(host) {
-  return new StatsD(host);
+  return new Statistik(host);
 };
