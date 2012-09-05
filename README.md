@@ -60,20 +60,27 @@ API
 If you specify a sampleRate (between 0 and 1) StatsD doesn't get hit on every
 log event in order to reduce load but samples up the events that get through so the stats stay correct.
 
+The parameter `stat` can always be either a `string` or an `array`, in case you want to log the same data to different _stats_.
+
 ### statistik([hostname='localhost'])
 Returns an instance of __statistik__ bound to `hostname`, from now on referred to as `log`.
 
-### log.timing(stat, time[, sampleRate=1])
+### log.timing(stat, time[, sampleRate])
 Log `time` in milliseconds to `stat`.
 
-### log.increment(stat[, sampleRate=1])
+### log.increment(stat[, sampleRate])
 Increment the counter at `stat` by 1.
 
-### log.decrement(stat[, sampleRate=1])
+### log.decrement(stat[, sampleRate])
 Decrement the counter at `stat` by 1.
 
-### log.gauge(stat, value[, sampleRate=1])
+### log.gauge(stat, value[, sampleRate])
 Set the gauge at `stat` to `value`.
+
+### log.send(stat, value, method [, sampleRate])
+Transmit data to StatsD following StatsD's UDP protocol: `<stat>:<value>|<method>@<sampleRate>`.
+  
+You might need to use this if you have a non standard StatsD implementation running and want to log custom data.
 
 ### log.stop()
 Close the UDP socket. This might be necessary if your script doesn't immediately terminate when all work is done just because the UDP socket is still open.
