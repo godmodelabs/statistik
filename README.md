@@ -31,7 +31,7 @@ log.gauge('cpu-usage', 30, 0.2);    // gauges with sampling work too
 In CLI:
 
 ```bash
-$ npm isntall -g statistik
+$ npm install -g statistik
 $ statistik --help
   
     Usage: statistik [options] arguments
