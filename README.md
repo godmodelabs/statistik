@@ -16,7 +16,7 @@ $ npm install statistik
 ```
 
 ```javascript
-var log = require('statistik')('localhost');
+var log = require('statistik')('localhost:8125');
 
 log.timing('pageload', 123);        // in miliseconds
 log.timing('pageload', 123, 0.5);   // supports sampling
@@ -44,13 +44,13 @@ $ statistik --help
 
     Configuration:
 
-      $ echo "graphite.local" > ~/.statistik
+      $ echo "graphite.local:8125" > ~/.statistik
 
     Examples:
 
       $ statistik increment visits
       $ statistik timing load 30 0.5
-      $ statistik -h graphite.local gauge mem-usage 12
+      $ statistik -h graphite.local:8125 gauge mem-usage 12
 
 ```
 
@@ -62,8 +62,10 @@ log event in order to reduce load but samples up the events that get through so 
 
 The parameter `stat` can always be either a `string` or an `array`, in case you want to log the same data to different _stats_.
 
-### statistik([hostname='localhost'])
-Returns an instance of __statistik__ bound to `hostname`, from now on referred to as `log`.
+### statistik([host='localhost'][, port=8125])
+Returns an instance of __statistik__ bound to `host:port`, from now on referred to as `log`.
+
+Both parameters can also be set at once: `statistik('localhost:8125')`.
 
 ### log.timing(stat, time[, sampleRate])
 Log `time` in milliseconds to `stat`.
