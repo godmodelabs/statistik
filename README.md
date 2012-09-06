@@ -97,6 +97,11 @@ $ node tests.js
     
 ```
 
+ToDo
+----
+
+* Improve tests
+
 License
 -------
 (MIT)
