@@ -6,8 +6,13 @@ var dgram = require('dgram');
  * @constructor
  * @param {string} [host='localhost'] StatsD's hostname 
  */
-var Statistik = function(host) {
+var Statistik = function(host, port) {
+  if (host && host.search(':')>-1) {
+    host = host.split(':')[0];
+    port = host.split(':')[1];
+  }
   this.host = host || 'localhost';
+  this.port = port || 8125;
 }
 
 /**
@@ -76,7 +81,7 @@ Statistik.prototype.send = function(stats, value, method, sampleRate) {
     if (sampleRate) message += '@'+sampleRate;
 
     if (!this.socket) this.socket = createSocket();
-    this.socket.send(new Buffer(message), 0, message.length, 8125, this.host);
+    this.socket.send(new Buffer(message), 0, message.length, this.port, this.host);
     this.clearSocket();
   }
 }

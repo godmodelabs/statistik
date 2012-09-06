@@ -1,5 +1,7 @@
 /**
- * Testsuite for the node statsd client 
+ * Testsuite for the node statsd client
+ *
+ * TODO: test constructor
  */
 
 // Module dependencies

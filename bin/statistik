@@ -13,7 +13,7 @@ program
 program.on('--help', function() {
   console.log('  Configuration:');
   console.log('');
-  console.log('    $ echo "graphite.local" > ~/.statistik');
+  console.log('    $ echo "graphite.local:8125" > ~/.statistik');
   if (fs.existsSync(confPath)) {
     console.log(
       '    currently saved host: '+read(confPath).replace('\n', '')
@@ -24,14 +24,15 @@ program.on('--help', function() {
   console.log('');
   console.log('    $ statistik increment visits');
   console.log('    $ statistik timing load 30 0.5');
-  console.log('    $ statistik -h graphite.local gauge mem-usage 12');
+  console.log('    $ statistik -h graphite.local:8125 gauge mem-usage 12');
   console.log('');
 });
 
 program.parse(process.argv);
 
-var host = 'localhost';
+var host = 'localhost:8125';
 if (fs.existsSync(confPath)) host = read(confPath);
+
 if (program.host) host = program.host;
 
 if (program.args.length < 2) return console.log('see --help');
