@@ -1,7 +1,7 @@
 {
   "name": "statistik",
   "description": "Node client for Etsy's StatsD",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Julian Gruber <julian@juliangruber.com>",
   "repository": "git://github.com/BoerseGo-AG/statistik",
   "dependencies": { "commander": "*" },

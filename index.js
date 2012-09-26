@@ -78,7 +78,7 @@ Statistik.prototype.send = function(stats, value, method, sampleRate) {
   var message;
   for (var s in stats) {
     message = stats[s]+':'+value+'|'+method;
-    if (sampleRate) message += '@'+sampleRate;
+    if (sampleRate) message += '|@'+sampleRate;
 
     if (!this.socket) this.socket = createSocket();
     this.socket.send(new Buffer(message), 0, message.length, this.port, this.host);

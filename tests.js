@@ -17,7 +17,7 @@ var tests = [{
     res: 'pageload:123|ms'
   }, {
     name: 'timingSampled', fn: 'timing', args: ['pageload', 123, 0.999],
-    res: 'pageload:123|ms@0.999'
+    res: 'pageload:123|ms|@0.999'
   }, {
     name: 'increment', fn: 'increment', args: ['visits'],
     res: 'visits:1|c'
@@ -29,10 +29,10 @@ var tests = [{
     res: 'users:-1|c'
   }, {
     name: 'decrementSampled', fn: 'decrement', args: ['users', 0.999],
-    res: 'users:-1|c@0.999'
+    res: 'users:-1|c|@0.999'
   }, {
     name: 'gauge', fn: 'gauge', args: ['usage', 30, 0.999],
-    res: 'usage:30|g@0.999'
+    res: 'usage:30|g|@0.999'
   }
 ];
 
