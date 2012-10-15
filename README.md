@@ -1,13 +1,12 @@
-statistik
-=========
 
-__statistik__ is a Node.js client for Etsy's StatsD with cli support.
+# statistik
+
+statistik is a Node.js client for Etsy's StatsD with cli support.
 
 It implements StatsD's protocol 1:1 and doesn't provide additional features.
 The UDP connection is closed if not used for a second in order to minimize StatsD's open connections.
 
-Usage
------
+## Usage
 
 In node.js:
 
@@ -54,8 +53,7 @@ $ statistik --help
 
 ```
 
-API
----
+## API
 
 If you specify a sampleRate (between 0 and 1) StatsD doesn't get hit on every
 log event in order to reduce load but samples up the events that get through so the stats stay correct.
@@ -87,20 +85,12 @@ You might need to use this if you have a non standard StatsD implementation runn
 ### log.stop()
 Close the UDP socket. This might be necessary if your script doesn't immediately terminate when all work is done just because the UDP socket is still open.
 
-Running the tests
------------------
+## Running the tests
 
 ```bash
-$ node tests.js
-
-    all tests passed after 9ms
-    
+$ npm install
+$ npm test
 ```
-
-ToDo
-----
-
-* Improve tests
 
 License
 -------
