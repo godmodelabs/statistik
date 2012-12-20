@@ -8,7 +8,7 @@
 var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
 var log = require('./index.js')();
-var assert = console.assert;
+var assert = require('assert');
 var check = function() { throw 'fail'; /* replaced with test function */ };
 
 // Tests
@@ -90,3 +90,8 @@ q.add(function finishUp(done) {
 
 // Start Tests
 q.run();
+
+// Constructor
+var constructor = require('./index')
+assert.equal(constructor('foo:1234').host, 'foo')
+assert.equal(constructor('foo:1234').port, '1234')

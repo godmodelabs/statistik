@@ -1,7 +1,7 @@
 {
   "name": "statistik",
   "description": "Node client for Etsy's StatsD",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "Julian Gruber <julian@juliangruber.com>",
   "repository": "git://github.com/godmodelabs/statistik",
   "dependencies": {
