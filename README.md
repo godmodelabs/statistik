@@ -1,7 +1,8 @@
-
 # statistik
 
 statistik is a Node.js client for Etsy's StatsD with cli support.
+
+[![Build Status](https://travis-ci.org/godmodelabs/statistik.png?branch=master)](https://travis-ci.org/godmodelabs/statistik)
 
 It implements StatsD's protocol 1:1 and doesn't provide additional features.
 The UDP connection is closed if not used for a second in order to minimize StatsD's open connections.
