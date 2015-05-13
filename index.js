@@ -8,8 +8,8 @@ var dgram = require('dgram');
  */
 var Statistik = function(host, port) {
   if (host && host.search(':')>-1) {
-    port = host.split(':')[1];
     host = host.split(':')[0];
+    port = host.split(':')[1];
   }
   this.host = host || 'localhost';
   this.port = port || 8125;
